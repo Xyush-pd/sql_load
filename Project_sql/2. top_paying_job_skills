@@ -26,7 +26,7 @@ With top_paying_jobs as (
         salary_year_avg is NOT NULL
     ORDER BY
         salary_year_avg DESC
-    LIMIT 30
+    LIMIT 10
 )
 SELECT 
     top_paying_jobs.*,
