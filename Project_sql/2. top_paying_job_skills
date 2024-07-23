@@ -1,0 +1,1482 @@
+/*
+Key Takeaways
+Python and SQL are the top two skills, indicating their essential role in data science.
+Visualization tools like Tableau are also in high demand.
+Cloud platforms such as AWS, Azure, and GCP are commonly required, reflecting the shift towards cloud-based data solutions.
+Machine Learning frameworks like TensorFlow, PyTorch, and Scikit-learn are frequently mentioned, highlighting the importance of ML skills.
+A variety of Big Data technologies (e.g., Spark, Hadoop) and databases (e.g., Cassandra, MongoDB) are also valued.
+*/
+
+With top_paying_jobs as (
+    
+    SELECT
+        job_id,
+        job_title,
+        job_location,
+        job_schedule_type,
+        salary_year_avg,
+        job_posted_date,
+        NAME AS company_name
+    FROM
+        job_postings_fact
+        LEFT JOIN company_dim on job_postings_fact.company_id = company_dim.company_id
+    WHERE
+        job_title_short = 'Data Scientist' AND
+        job_location = 'Anywhere' AND
+        salary_year_avg is NOT NULL
+    ORDER BY
+        salary_year_avg DESC
+    LIMIT 30
+)
+SELECT 
+    top_paying_jobs.*,
+    skills
+FROM top_paying_jobs
+Inner JOIN  skills_job_dim on top_paying_jobs.job_id = skills_job_dim.job_id
+Inner JOIN skills_dim on skills_job_dim.skill_id = skills_dim.skill_id
+order BY
+    salary_year_avg DESC
+/*
+[
+  {
+    "job_id": 40145,
+    "job_title": "Staff Data Scientist/Quant Researcher",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "550000.0",
+    "job_posted_date": "2023-08-16 16:05:16",
+    "company_name": "Selby Jennings",
+    "skills": "sql"
+  },
+  {
+    "job_id": 40145,
+    "job_title": "Staff Data Scientist/Quant Researcher",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "550000.0",
+    "job_posted_date": "2023-08-16 16:05:16",
+    "company_name": "Selby Jennings",
+    "skills": "python"
+  },
+  {
+    "job_id": 1714768,
+    "job_title": "Staff Data Scientist - Business Analytics",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "525000.0",
+    "job_posted_date": "2023-09-01 19:24:02",
+    "company_name": "Selby Jennings",
+    "skills": "sql"
+  },
+  {
+    "job_id": 1131472,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "375000.0",
+    "job_posted_date": "2023-07-31 14:05:21",
+    "company_name": "Algo Capital Group",
+    "skills": "sql"
+  },
+  {
+    "job_id": 1131472,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "375000.0",
+    "job_posted_date": "2023-07-31 14:05:21",
+    "company_name": "Algo Capital Group",
+    "skills": "python"
+  },
+  {
+    "job_id": 1131472,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "375000.0",
+    "job_posted_date": "2023-07-31 14:05:21",
+    "company_name": "Algo Capital Group",
+    "skills": "java"
+  },
+  {
+    "job_id": 1131472,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "375000.0",
+    "job_posted_date": "2023-07-31 14:05:21",
+    "company_name": "Algo Capital Group",
+    "skills": "cassandra"
+  },
+  {
+    "job_id": 1131472,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "375000.0",
+    "job_posted_date": "2023-07-31 14:05:21",
+    "company_name": "Algo Capital Group",
+    "skills": "spark"
+  },
+  {
+    "job_id": 1131472,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "375000.0",
+    "job_posted_date": "2023-07-31 14:05:21",
+    "company_name": "Algo Capital Group",
+    "skills": "hadoop"
+  },
+  {
+    "job_id": 1131472,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "375000.0",
+    "job_posted_date": "2023-07-31 14:05:21",
+    "company_name": "Algo Capital Group",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 126218,
+    "job_title": "Director Level - Product Management - Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "320000.0",
+    "job_posted_date": "2023-03-26 23:46:39",
+    "company_name": "Teramind",
+    "skills": "azure"
+  },
+  {
+    "job_id": 126218,
+    "job_title": "Director Level - Product Management - Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "320000.0",
+    "job_posted_date": "2023-03-26 23:46:39",
+    "company_name": "Teramind",
+    "skills": "aws"
+  },
+  {
+    "job_id": 126218,
+    "job_title": "Director Level - Product Management - Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "320000.0",
+    "job_posted_date": "2023-03-26 23:46:39",
+    "company_name": "Teramind",
+    "skills": "tensorflow"
+  },
+  {
+    "job_id": 126218,
+    "job_title": "Director Level - Product Management - Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "320000.0",
+    "job_posted_date": "2023-03-26 23:46:39",
+    "company_name": "Teramind",
+    "skills": "keras"
+  },
+  {
+    "job_id": 126218,
+    "job_title": "Director Level - Product Management - Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "320000.0",
+    "job_posted_date": "2023-03-26 23:46:39",
+    "company_name": "Teramind",
+    "skills": "pytorch"
+  },
+  {
+    "job_id": 126218,
+    "job_title": "Director Level - Product Management - Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "320000.0",
+    "job_posted_date": "2023-03-26 23:46:39",
+    "company_name": "Teramind",
+    "skills": "scikit-learn"
+  },
+  {
+    "job_id": 126218,
+    "job_title": "Director Level - Product Management - Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "320000.0",
+    "job_posted_date": "2023-03-26 23:46:39",
+    "company_name": "Teramind",
+    "skills": "datarobot"
+  },
+  {
+    "job_id": 129924,
+    "job_title": "Director of Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-01-21 11:09:36",
+    "company_name": "Storm4",
+    "skills": "python"
+  },
+  {
+    "job_id": 129924,
+    "job_title": "Director of Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-01-21 11:09:36",
+    "company_name": "Storm4",
+    "skills": "pandas"
+  },
+  {
+    "job_id": 129924,
+    "job_title": "Director of Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-01-21 11:09:36",
+    "company_name": "Storm4",
+    "skills": "numpy"
+  },
+  {
+    "job_id": 38905,
+    "job_title": "Principal Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-11-24 14:08:44",
+    "company_name": "Storm5",
+    "skills": "sql"
+  },
+  {
+    "job_id": 38905,
+    "job_title": "Principal Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-11-24 14:08:44",
+    "company_name": "Storm5",
+    "skills": "python"
+  },
+  {
+    "job_id": 38905,
+    "job_title": "Principal Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-11-24 14:08:44",
+    "company_name": "Storm5",
+    "skills": "java"
+  },
+  {
+    "job_id": 38905,
+    "job_title": "Principal Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-11-24 14:08:44",
+    "company_name": "Storm5",
+    "skills": "c"
+  },
+  {
+    "job_id": 38905,
+    "job_title": "Principal Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-11-24 14:08:44",
+    "company_name": "Storm5",
+    "skills": "aws"
+  },
+  {
+    "job_id": 38905,
+    "job_title": "Principal Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-11-24 14:08:44",
+    "company_name": "Storm5",
+    "skills": "gcp"
+  },
+  {
+    "job_id": 226011,
+    "job_title": "Distinguished Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-08-06 11:00:43",
+    "company_name": "Walmart",
+    "skills": "scala"
+  },
+  {
+    "job_id": 226011,
+    "job_title": "Distinguished Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-08-06 11:00:43",
+    "company_name": "Walmart",
+    "skills": "java"
+  },
+  {
+    "job_id": 226011,
+    "job_title": "Distinguished Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-08-06 11:00:43",
+    "company_name": "Walmart",
+    "skills": "spark"
+  },
+  {
+    "job_id": 226011,
+    "job_title": "Distinguished Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-08-06 11:00:43",
+    "company_name": "Walmart",
+    "skills": "tensorflow"
+  },
+  {
+    "job_id": 226011,
+    "job_title": "Distinguished Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-08-06 11:00:43",
+    "company_name": "Walmart",
+    "skills": "pytorch"
+  },
+  {
+    "job_id": 226011,
+    "job_title": "Distinguished Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-08-06 11:00:43",
+    "company_name": "Walmart",
+    "skills": "kubernetes"
+  },
+  {
+    "job_id": 457991,
+    "job_title": "Head of Battery Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-10-02 16:40:07",
+    "company_name": "Lawrence Harvey",
+    "skills": "python"
+  },
+  {
+    "job_id": 457991,
+    "job_title": "Head of Battery Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-10-02 16:40:07",
+    "company_name": "Lawrence Harvey",
+    "skills": "aws"
+  },
+  {
+    "job_id": 457991,
+    "job_title": "Head of Battery Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "300000.0",
+    "job_posted_date": "2023-10-02 16:40:07",
+    "company_name": "Lawrence Harvey",
+    "skills": "gcp"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "sql"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "python"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "nosql"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "r"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "sas"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "matlab"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "azure"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "databricks"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "aws"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "redshift"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "oracle"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "snowflake"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "spark"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "sas"
+  },
+  {
+    "job_id": 178888,
+    "job_title": "Pre-Sales Data Scientist, Financial Services",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "288000.0",
+    "job_posted_date": "2023-08-26 09:55:56",
+    "company_name": "Teradata",
+    "skills": "qlik"
+  },
+  {
+    "job_id": 1177572,
+    "job_title": "Data Science Manager, Online Customer Experience Intelligence (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "280000.0",
+    "job_posted_date": "2023-04-13 21:06:01",
+    "company_name": "Home Depot / THD",
+    "skills": "sql"
+  },
+  {
+    "job_id": 1177572,
+    "job_title": "Data Science Manager, Online Customer Experience Intelligence (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "280000.0",
+    "job_posted_date": "2023-04-13 21:06:01",
+    "company_name": "Home Depot / THD",
+    "skills": "bigquery"
+  },
+  {
+    "job_id": 1177572,
+    "job_title": "Data Science Manager, Online Customer Experience Intelligence (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "280000.0",
+    "job_posted_date": "2023-04-13 21:06:01",
+    "company_name": "Home Depot / THD",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "sql"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "python"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "java"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "cassandra"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "aws"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "spark"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "airflow"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "hadoop"
+  },
+  {
+    "job_id": 158782,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "275000.0",
+    "job_posted_date": "2023-07-04 10:41:31",
+    "company_name": "Algo Capital Group",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 89798,
+    "job_title": "Director, Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-26 16:02:50",
+    "company_name": "Cnam - Auditeurs - Accueil",
+    "skills": "python"
+  },
+  {
+    "job_id": 89798,
+    "job_title": "Director, Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-26 16:02:50",
+    "company_name": "Cnam - Auditeurs - Accueil",
+    "skills": "tensorflow"
+  },
+  {
+    "job_id": 89798,
+    "job_title": "Director, Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-26 16:02:50",
+    "company_name": "Cnam - Auditeurs - Accueil",
+    "skills": "pytorch"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "sql"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "python"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "r"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "spark"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "numpy"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "hadoop"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "tensorflow"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "pytorch"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "gdpr"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "scikit-learn"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "power bi"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "qlik"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "kubernetes"
+  },
+  {
+    "job_id": 1325996,
+    "job_title": "Chief Data Officer",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-07-27 19:04:47",
+    "company_name": "ZealoTech People",
+    "skills": "docker"
+  },
+  {
+    "job_id": 257651,
+    "job_title": "Data Science Vice President",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-01-27 11:30:16",
+    "company_name": "Storm6",
+    "skills": "python"
+  },
+  {
+    "job_id": 257651,
+    "job_title": "Data Science Vice President",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "265000.0",
+    "job_posted_date": "2023-01-27 11:30:16",
+    "company_name": "Storm6",
+    "skills": "opencv"
+  },
+  {
+    "job_id": 245928,
+    "job_title": "Data Science Manager",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-05-27 18:04:58",
+    "company_name": "Stealth",
+    "skills": "sql"
+  },
+  {
+    "job_id": 245928,
+    "job_title": "Data Science Manager",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-05-27 18:04:58",
+    "company_name": "Stealth",
+    "skills": "python"
+  },
+  {
+    "job_id": 245928,
+    "job_title": "Data Science Manager",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-05-27 18:04:58",
+    "company_name": "Stealth",
+    "skills": "scala"
+  },
+  {
+    "job_id": 245928,
+    "job_title": "Data Science Manager",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-05-27 18:04:58",
+    "company_name": "Stealth",
+    "skills": "r"
+  },
+  {
+    "job_id": 245928,
+    "job_title": "Data Science Manager",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-05-27 18:04:58",
+    "company_name": "Stealth",
+    "skills": "spark"
+  },
+  {
+    "job_id": 245928,
+    "job_title": "Data Science Manager",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-05-27 18:04:58",
+    "company_name": "Stealth",
+    "skills": "hadoop"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "sql"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "python"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "bigquery"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "spark"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "tensorflow"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "pytorch"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "scikit-learn"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 294863,
+    "job_title": "Principal Data Scientist, Applied AI",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "262500.0",
+    "job_posted_date": "2023-09-05 16:02:54",
+    "company_name": "Movable Ink",
+    "skills": "looker"
+  },
+  {
+    "job_id": 199110,
+    "job_title": "Staff Data Scientist (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "253500.0",
+    "job_posted_date": "2023-04-11 02:03:08",
+    "company_name": "Stitch Fix",
+    "skills": "python"
+  },
+  {
+    "job_id": 1275762,
+    "job_title": "Head of AI, ML & Data Science - Fintech",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "252500.0",
+    "job_posted_date": "2023-11-24 16:02:45",
+    "company_name": "Strativ Group",
+    "skills": "python"
+  },
+  {
+    "job_id": 58397,
+    "job_title": "Director of Data Science, Biostatistics ($260k)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-03-15 14:04:27",
+    "company_name": "Averity",
+    "skills": "sas"
+  },
+  {
+    "job_id": 58397,
+    "job_title": "Director of Data Science, Biostatistics ($260k)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-03-15 14:04:27",
+    "company_name": "Averity",
+    "skills": "sas"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "sql"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "python"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "javascript"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "html"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "mongodb"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "vba"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "php"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "mongodb"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "aws"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "tensorflow"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "scikit-learn"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "excel"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 1489914,
+    "job_title": "Data Scientist",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-04 16:03:51",
+    "company_name": "Smith Hanley Associates",
+    "skills": "powerpoint"
+  },
+  {
+    "job_id": 538468,
+    "job_title": "Head of Battery Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-18 15:39:28",
+    "company_name": "Lawrence Harvey",
+    "skills": "python"
+  },
+  {
+    "job_id": 538468,
+    "job_title": "Head of Battery Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-18 15:39:28",
+    "company_name": "Lawrence Harvey",
+    "skills": "aws"
+  },
+  {
+    "job_id": 538468,
+    "job_title": "Head of Battery Data Science",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "250000.0",
+    "job_posted_date": "2023-10-18 15:39:28",
+    "company_name": "Lawrence Harvey",
+    "skills": "gcp"
+  },
+  {
+    "job_id": 1442149,
+    "job_title": "Staff Data Scientist, Ads Measurement ML (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-03-16 23:06:10",
+    "company_name": "Reddit",
+    "skills": "sql"
+  },
+  {
+    "job_id": 1442149,
+    "job_title": "Staff Data Scientist, Ads Measurement ML (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-03-16 23:06:10",
+    "company_name": "Reddit",
+    "skills": "python"
+  },
+  {
+    "job_id": 1442149,
+    "job_title": "Staff Data Scientist, Ads Measurement ML (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-03-16 23:06:10",
+    "company_name": "Reddit",
+    "skills": "r"
+  },
+  {
+    "job_id": 1513220,
+    "job_title": "Principal Data Scientist (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-07-27 00:02:38",
+    "company_name": "Block",
+    "skills": "go"
+  },
+  {
+    "job_id": 1513220,
+    "job_title": "Principal Data Scientist (Remote)",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-07-27 00:02:38",
+    "company_name": "Block",
+    "skills": "c"
+  },
+  {
+    "job_id": 764457,
+    "job_title": "Staff Data Scientist, Advertiser Platform Analytics",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-01-10 02:03:11",
+    "company_name": "Reddit",
+    "skills": "sql"
+  },
+  {
+    "job_id": 764457,
+    "job_title": "Staff Data Scientist, Advertiser Platform Analytics",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-01-10 02:03:11",
+    "company_name": "Reddit",
+    "skills": "python"
+  },
+  {
+    "job_id": 764457,
+    "job_title": "Staff Data Scientist, Advertiser Platform Analytics",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-01-10 02:03:11",
+    "company_name": "Reddit",
+    "skills": "r"
+  },
+  {
+    "job_id": 764457,
+    "job_title": "Staff Data Scientist, Advertiser Platform Analytics",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-01-10 02:03:11",
+    "company_name": "Reddit",
+    "skills": "go"
+  },
+  {
+    "job_id": 764457,
+    "job_title": "Staff Data Scientist, Advertiser Platform Analytics",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-01-10 02:03:11",
+    "company_name": "Reddit",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 764457,
+    "job_title": "Staff Data Scientist, Advertiser Platform Analytics",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "247500.0",
+    "job_posted_date": "2023-01-10 02:03:11",
+    "company_name": "Reddit",
+    "skills": "looker"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "sql"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "python"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "nosql"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "r"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "sas"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "matlab"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "azure"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "aws"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "redshift"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "oracle"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "spark"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "tableau"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "sas"
+  },
+  {
+    "job_id": 228641,
+    "job_title": "Pre-Sales Data Scientist, Multi Industry",
+    "job_location": "Anywhere",
+    "job_schedule_type": "Full-time",
+    "salary_year_avg": "243500.0",
+    "job_posted_date": "2023-11-09 11:04:49",
+    "company_name": "Teradata",
+    "skills": "qlik"
+  }
+]
+*/
